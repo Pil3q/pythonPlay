@@ -17,6 +17,7 @@ with open('sampletrades.csv') as csvfile:
 
 #this will give us market value of trade
 print trades[0].marketVal
+
 #total market val for instrument
 instrumentName = 'option'
 instruments = [trade for trade in trades if trade.instrument == instrumentName]
@@ -24,27 +25,32 @@ marketValues = [trade.marketVal for trade in instruments]
 #maybe closing price * number of instruments on the market(where from?)
 total = sum(marketValues)
 print total
-# average price for the day
+
+# average price for the day for certain instrument
 filteredByDate = [trade for trade in instruments if trade.date[0:10] == '2017/10/10']
 prices = [trade.price for trade in filteredByDate]
 averagePrice = sum(prices)/len(prices)
 print averagePrice
-#closing price of the day
+
+#closing price of the day (no matter what kind of instrument)
 tradeTimes = [int(trade.date[11:13] + trade.date[14:16]) for trade in filteredByDate]
 closingTime = max(tradeTimes)
 closingTrade = [trade for trade in filteredByDate if int(trade.date[11:13] + trade.date[14:16]) == closingTime]
 closingPrice = closingTrade[0].price
 print closingPrice
+
 #constituent trades??
 reference = 'XZ126'
 byReference = [trade for trade in trades if trade.reference == reference]
 print byReference
-#for each day traded value
+
+#total traded value for the day
 date = '2017/10/11'
 forEachDay = [trade for trade in trades if trade.date[0:10] == date]
 tradedValues = [trade.marketVal for trade in forEachDay]
 totalForDay = sum(tradedValues)
 print totalForDay
+
 #closing price for the day (from all trades)
 closingTimesForDay = [int(trade.date[11:13] + trade.date[14:16]) for trade in forEachDay]
 closingTimeForDay = max(closingTimesForDay)
